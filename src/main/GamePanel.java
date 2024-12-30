@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Objects;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -36,8 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
     double delta = 0;
     long lastTime = System.nanoTime();
     long currentTime;
-
-    while (gameThread != null) {
+    
+    while (Objects.nonNull(gameThread)) {
       currentTime = System.nanoTime();
 
       delta += (currentTime - lastTime) / drawInterval;
