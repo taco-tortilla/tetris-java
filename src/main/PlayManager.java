@@ -17,6 +17,7 @@ public class PlayManager {
   public static int rightX;
   public static int topY;
   public static int bottomY;
+  public static int dropInterval = 60;
   final int WIDTH = 360;
   final int HEIGHT = 600;
   final int MINO_START_X;

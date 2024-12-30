@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
     pm = new PlayManager();
   }
 
-  public void Init() {
+  public void start() {
     gameThread = new Thread(this);
     gameThread.start();
   }
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     double delta = 0;
     long lastTime = System.nanoTime();
     long currentTime;
-    
+
     while (Objects.nonNull(gameThread)) {
       currentTime = System.nanoTime();
 
