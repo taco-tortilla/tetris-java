@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 import mino.Block;
@@ -25,11 +27,15 @@ public class PlayManager {
   public static int topY;
   public static int bottomY;
   public static int dropInterval = 60;
+  public static ArrayList<Block> stackBlocks = new ArrayList<>();
   final int WIDTH = 360;
   final int HEIGHT = 600;
   final int MINO_START_X;
   final int MINO_START_Y;
+  final int NEXTMINO_X;
+  final int NEXTMINO_Y;
   Mino currentMino;
+  Mino nextMino;
 
 
   public PlayManager() {
@@ -41,8 +47,13 @@ public class PlayManager {
     MINO_START_X = leftX + (WIDTH / 2) - Block.SIZE;
     MINO_START_Y = topY + Block.SIZE;
 
+    NEXTMINO_X = rightX + 190;
+    NEXTMINO_Y = topY + 500;
+
     currentMino = selectMino();
     currentMino.setXY(MINO_START_X, MINO_START_Y);
+    nextMino = selectMino();
+    nextMino.setXY(NEXTMINO_X, NEXTMINO_Y);
   }
 
   private Mino selectMino() {
@@ -63,6 +74,17 @@ public class PlayManager {
   }
 
   public void update() {
+    if (!currentMino.active) {
+      stackBlocks.addAll(Arrays.asList(currentMino.b));
+
+      // Replace the currentMino
+      currentMino = nextMino;
+      currentMino.setXY(MINO_START_X, MINO_START_Y);
+      nextMino = selectMino();
+      nextMino.setXY(NEXTMINO_X, NEXTMINO_Y);
+
+      return;
+    }
     currentMino.update();
   }
 
@@ -85,6 +107,14 @@ public class PlayManager {
     // Draw current mino
     if (Objects.nonNull(currentMino)) {
       currentMino.draw(g2);
+    }
+
+    // Draw next mino
+    nextMino.draw(g2);
+
+    // Draw stack mino
+    for (Block block : stackBlocks) {
+      block.draw(g2);
     }
 
     // Draw Pause
