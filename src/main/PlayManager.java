@@ -87,5 +87,14 @@ public class PlayManager {
       currentMino.draw(g2);
     }
 
+    // Draw Pause
+    g2.setColor(Color.white);
+    g2.setFont(g2.getFont().deriveFont(40f));
+    if (KeyHandler.spacePressed) {
+      x = leftX + 100;
+      y = topY + 310;
+      g2.drawString("PAUSED", x, y);
+    }
+
   }
 }
