@@ -66,6 +66,9 @@ public class Mino {
     rightCollision = false;
     bottomCollision = false;
 
+    // Check stack block collision
+    checkStackBlocksCollision();
+
     // Left collision
     for (Block block : b) {
       if (block.x == PlayManager.leftX) {
@@ -97,6 +100,9 @@ public class Mino {
     rightCollision = false;
     bottomCollision = false;
 
+    // Check stack block collision
+    checkStackBlocksCollision();
+
     // Left collision
     for (Block block : tempB) {
       if (block.x < PlayManager.leftX) {
@@ -120,6 +126,31 @@ public class Mino {
         break;
       }
     }
+  }
+
+  public void checkStackBlocksCollision() {
+    for (Block stackBlock : PlayManager.stackBlocks) {
+      int targetX = stackBlock.x;
+      int targetY = stackBlock.y;
+
+      // Check bottom
+      for (Block block : b) {
+        if (block.y + Block.SIZE == targetY && block.x == targetX) {
+          bottomCollision = true;
+          break;
+        }
+        if (block.x - Block.SIZE == targetX && block.y == targetY) {
+          leftCollision = true;
+          break;
+        }
+        if (block.x + Block.SIZE == targetX && block.y == targetY) {
+          rightCollision = true;
+          break;
+        }
+      }
+
+    }
+
   }
 
 
@@ -193,7 +224,7 @@ public class Mino {
       active = false;
       return;
     }
-    
+
     autoDropCounter++;
     if (autoDropCounter == PlayManager.dropInterval) {
       b[0].y += Block.SIZE;
