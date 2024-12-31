@@ -11,8 +11,10 @@ public class Mino {
   public Block[] tempB = new Block[4];
   public int rotation = 0; // 4 directions (0 | 90 | 180 | 270)
   public boolean active = true;
+  public boolean deactivating;
   int autoDropCounter = 0;
   boolean leftCollision, rightCollision, bottomCollision;
+  int deactivateCounter = 0;
 
   public void create(Color c) {
     b[0] = new Block(c);
@@ -153,8 +155,11 @@ public class Mino {
 
   }
 
-
   public void update() {
+
+    if (deactivating) {
+      deactivating();
+    }
 
     if (KeyHandler.upPressed) {
       switch (rotation) {
@@ -221,7 +226,7 @@ public class Mino {
     }
 
     if (bottomCollision) {
-      active = false;
+      deactivating = true;
       return;
     }
 
@@ -234,6 +239,18 @@ public class Mino {
       autoDropCounter = 0;
     }
 
+  }
+
+  private void deactivating() {
+    deactivateCounter++;
+    if (deactivateCounter == 30) {
+      deactivateCounter = 0;
+      checkMovementCollision();
+
+      if (bottomCollision) {
+        active = false;
+      }
+    }
   }
 
   public void draw(Graphics2D g2) {
