@@ -5,7 +5,7 @@ import java.awt.Color;
 public class MinoO extends Mino {
 
   public MinoO() {
-    create(Color.yellow);
+    super.create(Color.yellow);
   }
 
   @Override

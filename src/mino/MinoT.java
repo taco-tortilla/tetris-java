@@ -5,7 +5,7 @@ import java.awt.Color;
 public class MinoT extends Mino {
 
   public MinoT() {
-    create(Color.MAGENTA);
+    super.create(Color.MAGENTA);
   }
 
   @Override
