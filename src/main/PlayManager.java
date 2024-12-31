@@ -41,6 +41,9 @@ public class PlayManager {
   int effectCounter;
   ArrayList<Integer> effectsY = new ArrayList<>();
   boolean gameOver;
+  int level = 1;
+  int lines;
+  int score;
 
 
   public PlayManager() {
@@ -105,6 +108,7 @@ public class PlayManager {
     int x = leftX;
     int y = topY;
     int blockCount = 0;
+    int lineCount = 0;
 
     while (x < rightX && y < bottomY) {
       for (Block stackBlock : stackBlocks) {
@@ -126,6 +130,19 @@ public class PlayManager {
               stackBlocks.remove(i);
             }
           }
+
+          lineCount++;
+          lines++;
+
+          if (lines % 10 == 0 && dropInterval > 1) {
+            level++;
+            if (dropInterval > 10) {
+              dropInterval -= 10;
+            } else {
+              dropInterval -= 1;
+            }
+          }
+
           for (Block stackBlock : stackBlocks) {
             if (stackBlock.y < y) {
               stackBlock.y += Block.SIZE;
@@ -138,6 +155,10 @@ public class PlayManager {
       }
     }
 
+    if (lineCount > 0) {
+      int singleLineScore = 10 * level;
+      score += singleLineScore * lineCount;
+    }
   }
 
   public void draw(Graphics2D g2) {
@@ -155,6 +176,25 @@ public class PlayManager {
     g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
         RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     g2.drawString("NEXT", x + 70, y + 30);
+
+    // Draw score frame
+    int scoreWidth = 250;
+    int scoreFrameX = leftX - (100 + scoreWidth);
+    g2.drawRect(scoreFrameX, y, 250, 300);
+
+    int titleX = scoreFrameX + 80;
+    int titleY = y + 50;
+    g2.drawString("SCORE", titleX, titleY);
+    titleY += 30;
+    g2.drawString(Integer.toString(score), titleX + 40, titleY);
+    titleY += 60;
+    g2.drawString("LEVEL", titleX, titleY);
+    titleY += 30;
+    g2.drawString(Integer.toString(level), titleX + 40, titleY);
+    titleY += 60;
+    g2.drawString("LINES", titleX, titleY);
+    titleY += 30;
+    g2.drawString(Integer.toString(lines), titleX + 40, titleY);
 
     // Draw current mino
     if (Objects.nonNull(currentMino)) {
