@@ -135,19 +135,20 @@ public class Mino {
       int targetX = stackBlock.x;
       int targetY = stackBlock.y;
 
-      // Check bottom
       for (Block block : b) {
+        // Check bottom
         if (block.y + Block.SIZE == targetY && block.x == targetX) {
           bottomCollision = true;
-          break;
         }
+
+        // Check left
         if (block.x - Block.SIZE == targetX && block.y == targetY) {
           leftCollision = true;
-          break;
         }
+
+        // Check Right
         if (block.x + Block.SIZE == targetX && block.y == targetY) {
           rightCollision = true;
-          break;
         }
       }
 
@@ -183,46 +184,36 @@ public class Mino {
     checkMovementCollision();
 
     if (KeyHandler.downPressed) {
+      if (!bottomCollision) {
+        for (Block block : b) {
+          block.y += Block.SIZE;
+        }
+
+        autoDropCounter = 0;
+      }
+
       KeyHandler.downPressed = false;
-
-      if (bottomCollision) {
-        return;
-      }
-
-      for (Block block : b) {
-        block.y += Block.SIZE;
-      }
-
-      autoDropCounter = 0;
     }
 
     if (KeyHandler.rightPressed) {
+      if (!rightCollision) {
+        for (Block block : b) {
+          block.x += Block.SIZE;
+        }
+      }
+
       KeyHandler.rightPressed = false;
-
-      if (rightCollision) {
-        return;
-      }
-
-      for (Block block : b) {
-        block.x += Block.SIZE;
-      }
-
-      autoDropCounter = 0;
     }
 
     if (KeyHandler.leftPressed) {
+      if (!leftCollision) {
+        for (Block block : b) {
+          block.x -= Block.SIZE;
+        }
+
+      }
+
       KeyHandler.leftPressed = false;
-
-      if (leftCollision) {
-        return;
-      }
-
-      for (Block block : b) {
-        block.x -= Block.SIZE;
-      }
-
-      autoDropCounter = 0;
-
     }
 
     if (bottomCollision) {
