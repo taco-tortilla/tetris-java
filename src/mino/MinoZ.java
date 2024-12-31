@@ -35,6 +35,25 @@ public class MinoZ extends Mino {
   @Override
   public void getRotation0() {
     /*
+      □ □
+        □ □
+     */
+
+    tempB[0].x = b[0].x;
+    tempB[0].y = b[0].y;
+    tempB[1].x = b[0].x - Block.SIZE;
+    tempB[1].y = b[0].y;
+    tempB[2].x = b[0].x + Block.SIZE;
+    tempB[2].y = b[0].y + Block.SIZE;
+    tempB[3].x = b[0].x;
+    tempB[3].y = b[0].y + Block.SIZE;
+
+    updateXY(0);
+  }
+
+  @Override
+  public void getRotation90() {
+    /*
         □
       □ □
       □
@@ -49,11 +68,11 @@ public class MinoZ extends Mino {
     tempB[3].x = b[0].x - Block.SIZE;
     tempB[3].y = b[0].y;
 
-    updateXY(0);
+    updateXY(90);
   }
 
   @Override
-  public void getRotation90() {
+  public void getRotation180() {
     /*
       □ □
         □ □
@@ -68,11 +87,11 @@ public class MinoZ extends Mino {
     tempB[3].x = b[0].x;
     tempB[3].y = b[0].y - Block.SIZE;
 
-    updateXY(90);
+    updateXY(180);
   }
 
   @Override
-  public void getRotation180() {
+  public void getRotation270() {
     /*
         □
       □ □
@@ -87,25 +106,6 @@ public class MinoZ extends Mino {
     tempB[2].y = b[0].y - Block.SIZE;
     tempB[3].x = b[0].x + Block.SIZE;
     tempB[3].y = b[0].y;
-
-    updateXY(180);
-  }
-
-  @Override
-  public void getRotation270() {
-    /*
-      □ □
-        □ □
-     */
-
-    tempB[0].x = b[0].x;
-    tempB[0].y = b[0].y;
-    tempB[1].x = b[0].x - Block.SIZE;
-    tempB[1].y = b[0].y;
-    tempB[2].x = b[0].x + Block.SIZE;
-    tempB[2].y = b[0].y + Block.SIZE;
-    tempB[3].x = b[0].x;
-    tempB[3].y = b[0].y + Block.SIZE;
 
     updateXY(270);
 
