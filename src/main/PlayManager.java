@@ -6,9 +6,16 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.Objects;
+import java.util.Random;
 import mino.Block;
 import mino.Mino;
+import mino.MinoI;
+import mino.MinoJ;
 import mino.MinoL;
+import mino.MinoO;
+import mino.MinoS;
+import mino.MinoT;
+import mino.MinoZ;
 
 public class PlayManager {
 
@@ -34,8 +41,25 @@ public class PlayManager {
     MINO_START_X = leftX + (WIDTH / 2) - Block.SIZE;
     MINO_START_Y = topY + Block.SIZE;
 
-    currentMino = new MinoL();
+    currentMino = selectMino();
     currentMino.setXY(MINO_START_X, MINO_START_Y);
+  }
+
+  private Mino selectMino() {
+    Mino mino = null;
+    int i = new Random().nextInt(7);
+
+    mino = switch (i) {
+      case 0 -> new MinoI();
+      case 1 -> new MinoJ();
+      case 2 -> new MinoL();
+      case 3 -> new MinoO();
+      case 4 -> new MinoS();
+      case 5 -> new MinoT();
+      case 6 -> new MinoZ();
+      default -> throw new IllegalStateException("Unexpected value: " + i);
+    };
+    return mino;
   }
 
   public void update() {
